@@ -187,21 +187,22 @@ end
 
 local espBg, espKnob = makeRow("ESP", 30)
 local tpBg, tpKnob = makeRow("TP", 60)
-local flyBg, flyKnob = makeRow("FLY", 90)
+local noclipBg, noclipKnob = makeRow("NOCLIP", 90)
+local flyBg, flyKnob = makeRow("FLY", 120)
 
 -- slider FLY / Speed logo abaixo do FLY --
 local speedLabel = Instance.new("TextLabel")
 speedLabel.Text = "  Speed" speedLabel.Font = Enum.Font.Gotham speedLabel.TextSize = 14
 speedLabel.TextColor3 = Color3.new(1,1,1) speedLabel.TextXAlignment = Enum.TextXAlignment.Left
 speedLabel.BackgroundTransparency = 1 speedLabel.Size = UDim2.new(0,100,0,20)
-speedLabel.Position = UDim2.new(0,0,0,120) speedLabel.Parent = main
+speedLabel.Position = UDim2.new(0,0,0,150) speedLabel.Parent = main
 local speedVal = Instance.new("TextLabel")
 speedVal.Text = tostring(speed) speedVal.Font = Enum.Font.Gotham speedVal.TextSize = 13
 speedVal.TextColor3 = Color3.fromRGB(180,180,180) speedVal.TextXAlignment = Enum.TextXAlignment.Right
 speedVal.BackgroundTransparency = 1 speedVal.Size = UDim2.new(0,60,0,20)
-speedVal.Position = UDim2.new(1,-70,0,120) speedVal.Parent = main
+speedVal.Position = UDim2.new(1,-70,0,150) speedVal.Parent = main
 local bar = Instance.new("TextButton")
-bar.Text = "" bar.Size = UDim2.new(1,-30,0,6) bar.Position = UDim2.new(0,15,0,145)
+bar.Text = "" bar.Size = UDim2.new(1,-30,0,6) bar.Position = UDim2.new(0,15,0,175)
 bar.BackgroundColor3 = Color3.fromRGB(90,90,90) bar.AutoButtonColor = false bar.Parent = main
 local c4 = Instance.new("UICorner") c4.CornerRadius = UDim.new(1,0) c4.Parent = bar
 local fill = Instance.new("Frame") fill.BorderSizePixel = 0 fill.BackgroundColor3 = Color3.new(1,1,1) fill.Parent = bar
@@ -210,30 +211,27 @@ local sliderKnob = Instance.new("Frame") sliderKnob.Size = UDim2.new(0,16,0,16) 
 local c6 = Instance.new("UICorner") c6.CornerRadius = UDim.new(1,0) c6.Parent = sliderKnob
 
 -- HITBOX logo abaixo do slider do FLY --
-local hitBg, hitKnob = makeRow("HITBOX", 175)
+local hitBg, hitKnob = makeRow("HITBOX", 205)
 
 -- slider Hitbox logo abaixo do HITBOX --
 local hitboxLabel = Instance.new("TextLabel")
 hitboxLabel.Text = "  Hitbox Size" hitboxLabel.Font = Enum.Font.Gotham hitboxLabel.TextSize = 14
 hitboxLabel.TextColor3 = Color3.new(1,1,1) hitboxLabel.TextXAlignment = Enum.TextXAlignment.Left
 hitboxLabel.BackgroundTransparency = 1 hitboxLabel.Size = UDim2.new(0,110,0,20)
-hitboxLabel.Position = UDim2.new(0,0,0,205) hitboxLabel.Parent = main
+hitboxLabel.Position = UDim2.new(0,0,0,235) hitboxLabel.Parent = main
 local hitboxVal = Instance.new("TextLabel")
 hitboxVal.Text = tostring(hitboxSize) hitboxVal.Font = Enum.Font.Gotham hitboxVal.TextSize = 13
 hitboxVal.TextColor3 = Color3.fromRGB(180,180,180) hitboxVal.TextXAlignment = Enum.TextXAlignment.Right
 hitboxVal.BackgroundTransparency = 1 hitboxVal.Size = UDim2.new(0,60,0,20)
-hitboxVal.Position = UDim2.new(1,-70,0,205) hitboxVal.Parent = main
+hitboxVal.Position = UDim2.new(1,-70,0,235) hitboxVal.Parent = main
 local hitBar = Instance.new("TextButton")
-hitBar.Text = "" hitBar.Size = UDim2.new(1,-30,0,6) hitBar.Position = UDim2.new(0,15,0,230)
+hitBar.Text = "" hitBar.Size = UDim2.new(1,-30,0,6) hitBar.Position = UDim2.new(0,15,0,260)
 hitBar.BackgroundColor3 = Color3.fromRGB(90,90,90) hitBar.AutoButtonColor = false hitBar.Parent = main
 local hc4 = Instance.new("UICorner") hc4.CornerRadius = UDim.new(1,0) hc4.Parent = hitBar
 local hitFill = Instance.new("Frame") hitFill.BorderSizePixel = 0 hitFill.BackgroundColor3 = Color3.new(1,1,1) hitFill.Parent = hitBar
 local hc5 = Instance.new("UICorner") hc5.CornerRadius = UDim.new(1,0) hc5.Parent = hitFill
 local hitSliderKnob = Instance.new("Frame") hitSliderKnob.Size = UDim2.new(0,16,0,16) hitSliderKnob.BackgroundColor3 = Color3.new(1,1,1) hitSliderKnob.Parent = hitBar
 local hc6 = Instance.new("UICorner") hc6.CornerRadius = UDim.new(1,0) hc6.Parent = hitSliderKnob
-
--- NOCLIP logo abaixo do slider do HITBOX --
-local noclipBg, noclipKnob = makeRow("NOCLIP", 240)
 
 local function updateUI()
 	local a = (speed-MIN)/(MAX-MIN)
