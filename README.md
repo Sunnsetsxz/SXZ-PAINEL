@@ -7,9 +7,11 @@ Painel de **Fly + ESP + Hitbox** para Roblox.
 - **Controle de velocidade** — slider de 10 a 200
 - **ESP** — destaca jogadores com nome e distância em metros
 - **Hitbox** — aumenta a hitbox dos inimigos (slider de 5 a 50)
+- **TP ao clicar** — teleporte até o lugar clicado (ative com **T** e clique em qualquer lugar)
 
 ## Controles
 - **F** — ativar/desativar o Fly
+- **T** — ativar/desativar o TP ao clicar
 - **W / A / S / D** — movimentação (direção da câmera)
 - **Space / E** — subir
 - **Shift / Q** — descer
