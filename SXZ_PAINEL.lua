@@ -4,6 +4,7 @@ local RS = game:GetService("RunService")
 local player = Players.LocalPlayer
 local flying = false
 local espOn = false
+local tpOn = false
 local speed = 75
 local MIN, MAX = 10, 200
 local killed = false
@@ -136,7 +137,7 @@ local gui = Instance.new("ScreenGui")
 gui.Name = "FlyGui" gui.ResetOnSpawn = false gui.DisplayOrder = 999
 gui.Parent = player:WaitForChild("PlayerGui")
 local main = Instance.new("Frame")
-main.Size = UDim2.new(0,200,0,220)
+main.Size = UDim2.new(0,200,0,270)
 main.Position = UDim2.new(1,-220,0,150)
 main.BackgroundColor3 = Color3.fromRGB(18,18,18)
 main.BackgroundTransparency = 0.15
@@ -149,7 +150,7 @@ closeBtn.Text = "X" closeBtn.Font = Enum.Font.GothamBlack closeBtn.TextSize = 16
 closeBtn.TextColor3 = Color3.fromRGB(160,160,160) closeBtn.BackgroundTransparency = 1
 closeBtn.Size = UDim2.new(0,24,0,24) closeBtn.Position = UDim2.new(0,6,0,4) closeBtn.Parent = main
 closeBtn.MouseButton1Click:Connect(function()
-	killed = true flying = false espOn = false hitboxOn = false
+	killed = true flying = false espOn = false hitboxOn = false tpOn = false
 	pcall(function() humanoid.PlatformStand = false end)
 	setNoAnim(false) clearESP() restoreHitbox() gui:Destroy()
 end)
@@ -199,27 +200,30 @@ local sliderKnob = Instance.new("Frame") sliderKnob.Size = UDim2.new(0,16,0,16) 
 local c6 = Instance.new("UICorner") c6.CornerRadius = UDim.new(1,0) c6.Parent = sliderKnob
 
 -- HITBOX logo abaixo do slider do FLY --
-local hitBg, hitKnob = makeRow("HITBOX", 130)
+local hitBg, hitKnob = makeRow("HITBOX", 160)
 
 -- slider Hitbox logo abaixo do HITBOX --
 local hitboxLabel = Instance.new("TextLabel")
 hitboxLabel.Text = "  Hitbox Size" hitboxLabel.Font = Enum.Font.Gotham hitboxLabel.TextSize = 14
 hitboxLabel.TextColor3 = Color3.new(1,1,1) hitboxLabel.TextXAlignment = Enum.TextXAlignment.Left
 hitboxLabel.BackgroundTransparency = 1 hitboxLabel.Size = UDim2.new(0,110,0,20)
-hitboxLabel.Position = UDim2.new(0,0,0,160) hitboxLabel.Parent = main
+hitboxLabel.Position = UDim2.new(0,0,0,190) hitboxLabel.Parent = main
 local hitboxVal = Instance.new("TextLabel")
 hitboxVal.Text = tostring(hitboxSize) hitboxVal.Font = Enum.Font.Gotham hitboxVal.TextSize = 13
 hitboxVal.TextColor3 = Color3.fromRGB(180,180,180) hitboxVal.TextXAlignment = Enum.TextXAlignment.Right
 hitboxVal.BackgroundTransparency = 1 hitboxVal.Size = UDim2.new(0,60,0,20)
-hitboxVal.Position = UDim2.new(1,-70,0,160) hitboxVal.Parent = main
+hitboxVal.Position = UDim2.new(1,-70,0,190) hitboxVal.Parent = main
 local hitBar = Instance.new("TextButton")
-hitBar.Text = "" hitBar.Size = UDim2.new(1,-30,0,6) hitBar.Position = UDim2.new(0,15,0,185)
+hitBar.Text = "" hitBar.Size = UDim2.new(1,-30,0,6) hitBar.Position = UDim2.new(0,15,0,215)
 hitBar.BackgroundColor3 = Color3.fromRGB(90,90,90) hitBar.AutoButtonColor = false hitBar.Parent = main
 local hc4 = Instance.new("UICorner") hc4.CornerRadius = UDim.new(1,0) hc4.Parent = hitBar
 local hitFill = Instance.new("Frame") hitFill.BorderSizePixel = 0 hitFill.BackgroundColor3 = Color3.new(1,1,1) hitFill.Parent = hitBar
 local hc5 = Instance.new("UICorner") hc5.CornerRadius = UDim.new(1,0) hc5.Parent = hitFill
 local hitSliderKnob = Instance.new("Frame") hitSliderKnob.Size = UDim2.new(0,16,0,16) hitSliderKnob.BackgroundColor3 = Color3.new(1,1,1) hitSliderKnob.Parent = hitBar
 local hc6 = Instance.new("UICorner") hc6.CornerRadius = UDim.new(1,0) hc6.Parent = hitSliderKnob
+
+-- TP logo abaixo do slider do HITBOX --
+local tpBg, tpKnob = makeRow("TP", 240)
 
 local function updateUI()
 	local a = (speed-MIN)/(MAX-MIN)
@@ -257,9 +261,14 @@ local function setHitbox(on)
 	hitboxOn = on setToggle(hitBg, hitKnob, on)
 	if not on then restoreHitbox() end
 end
+local function setTP(on)
+	if killed then return end
+	tpOn = on setToggle(tpBg, tpKnob, on)
+end
 flyBg.MouseButton1Click:Connect(function() setFly(not flying) end)
 espBg.MouseButton1Click:Connect(function() setESP(not espOn) end)
 hitBg.MouseButton1Click:Connect(function() setHitbox(not hitboxOn) end)
+tpBg.MouseButton1Click:Connect(function() setTP(not tpOn) end)
 UIS.InputBegan:Connect(function(i,g) if killed or g then return end if i.KeyCode == Enum.KeyCode.F then setFly(not flying) end end)
 
 -- toggle GUI com Insert --
@@ -290,6 +299,28 @@ UIS.InputChanged:Connect(function(i)
 	if i.UserInputType==Enum.UserInputType.MouseMovement or i.UserInputType==Enum.UserInputType.Touch then
 		if draggingSpeed then setFromX(i.Position.X) end
 		if draggingHit then setHitFromX(i.Position.X) end
+	end
+end)
+
+-- toggle TP com tecla T --
+UIS.InputBegan:Connect(function(i,g) if killed or g then return end if i.KeyCode == Enum.KeyCode.T then setTP(not tpOn) end end)
+
+-- TP ao clicar no lugar --
+UIS.InputBegan:Connect(function(i,g)
+	if killed or g then return end
+	if i.UserInputType == Enum.UserInputType.MouseButton1 and tpOn then
+		if draggingSpeed or draggingHit then return end
+		local pos = UIS:GetMouseLocation()
+		local unitRay = workspace.CurrentCamera:ViewportPointToRay(pos.X,pos.Y)
+		local params = RaycastParams.new()
+		params.FilterType = Enum.RaycastFilterType.Exclude
+		params.FilterDescendantsInstances = {player.Character}
+		local res = workspace:Raycast(unitRay.Origin, unitRay.Direction*1000, params)
+		local dest = res and res.Position or (unitRay.Origin + unitRay.Direction*500)
+		if hrp then
+			hrp.CFrame = CFrame.new(dest + Vector3.new(0,3,0))
+			hrp.AssemblyLinearVelocity = Vector3.zero
+		end
 	end
 end)
 
