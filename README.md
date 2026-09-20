@@ -8,10 +8,12 @@ Painel de **Fly + ESP + Hitbox** para Roblox.
 - **ESP** — destaca jogadores com nome e distância em metros
 - **Hitbox** — aumenta a hitbox dos inimigos (slider de 5 a 50)
 - **TP ao clicar** — teleporte até o lugar clicado (ative com **T** e clique em qualquer lugar)
+- **Noclip** — atravesse paredes (tecla **N**)
 
 ## Controles
 - **F** — ativar/desativar o Fly
 - **T** — ativar/desativar o TP ao clicar
+- **N** — ativar/desativar o Noclip
 - **W / A / S / D** — movimentação (direção da câmera)
 - **Space / E** — subir
 - **Shift / Q** — descer
