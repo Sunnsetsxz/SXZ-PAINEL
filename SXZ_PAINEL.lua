@@ -5,6 +5,7 @@ local player = Players.LocalPlayer
 local flying = false
 local espOn = false
 local tpOn = false
+local noclipOn = false
 local speed = 75
 local MIN, MAX = 10, 200
 local killed = false
@@ -61,6 +62,14 @@ local function restoreHitbox()
 				end)
 			end
 		end
+	end
+end
+
+local function restoreNoClip()
+	local char = player.Character
+	if not char then return end
+	for _,v in pairs(char:GetDescendants()) do
+		if v:IsA("BasePart") then pcall(function() v.CanCollide = true end) end
 	end
 end
 
@@ -150,9 +159,9 @@ closeBtn.Text = "X" closeBtn.Font = Enum.Font.GothamBlack closeBtn.TextSize = 16
 closeBtn.TextColor3 = Color3.fromRGB(160,160,160) closeBtn.BackgroundTransparency = 1
 closeBtn.Size = UDim2.new(0,24,0,24) closeBtn.Position = UDim2.new(0,6,0,4) closeBtn.Parent = main
 closeBtn.MouseButton1Click:Connect(function()
-	killed = true flying = false espOn = false hitboxOn = false tpOn = false
+	killed = true flying = false espOn = false hitboxOn = false tpOn = false noclipOn = false
 	pcall(function() humanoid.PlatformStand = false end)
-	setNoAnim(false) clearESP() restoreHitbox() gui:Destroy()
+	setNoAnim(false) clearESP() restoreHitbox() restoreNoClip() gui:Destroy()
 end)
 
 local title = Instance.new("TextLabel")
@@ -223,6 +232,9 @@ local hc5 = Instance.new("UICorner") hc5.CornerRadius = UDim.new(1,0) hc5.Parent
 local hitSliderKnob = Instance.new("Frame") hitSliderKnob.Size = UDim2.new(0,16,0,16) hitSliderKnob.BackgroundColor3 = Color3.new(1,1,1) hitSliderKnob.Parent = hitBar
 local hc6 = Instance.new("UICorner") hc6.CornerRadius = UDim.new(1,0) hc6.Parent = hitSliderKnob
 
+-- NOCLIP logo abaixo do slider do HITBOX --
+local noclipBg, noclipKnob = makeRow("NOCLIP", 240)
+
 local function updateUI()
 	local a = (speed-MIN)/(MAX-MIN)
 	fill.Size = UDim2.new(a,0,1,0)
@@ -263,10 +275,16 @@ local function setTP(on)
 	if killed then return end
 	tpOn = on setToggle(tpBg, tpKnob, on)
 end
+local function setNoclip(on)
+	if killed then return end
+	noclipOn = on setToggle(noclipBg, noclipKnob, on)
+	if not on then restoreNoClip() end
+end
 flyBg.MouseButton1Click:Connect(function() setFly(not flying) end)
 espBg.MouseButton1Click:Connect(function() setESP(not espOn) end)
 hitBg.MouseButton1Click:Connect(function() setHitbox(not hitboxOn) end)
 tpBg.MouseButton1Click:Connect(function() setTP(not tpOn) end)
+noclipBg.MouseButton1Click:Connect(function() setNoclip(not noclipOn) end)
 UIS.InputBegan:Connect(function(i,g) if killed or g then return end if i.KeyCode == Enum.KeyCode.F then setFly(not flying) end end)
 
 -- toggle GUI com Insert --
@@ -302,6 +320,20 @@ end)
 
 -- toggle TP com tecla T --
 UIS.InputBegan:Connect(function(i,g) if killed or g then return end if i.KeyCode == Enum.KeyCode.T then setTP(not tpOn) end end)
+-- toggle NOCLIP com tecla N --
+UIS.InputBegan:Connect(function(i,g) if killed or g then return end if i.KeyCode == Enum.KeyCode.N then setNoclip(not noclipOn) end end)
+
+-- NOCLIP --
+RS.RenderStepped:Connect(function()
+	if killed or not noclipOn then return end
+	local char = player.Character
+	if not char then return end
+	for _,v in pairs(char:GetDescendants()) do
+		if v:IsA("BasePart") then
+			v.CanCollide = false
+		end
+	end
+end)
 
 -- TP ao clicar no lugar --
 UIS.InputBegan:Connect(function(i,g)
