@@ -1,13 +1,22 @@
 # SXZ PAINEL
 
-Painel de fly + ESP para Roblox.
+Painel de **Fly + ESP + Hitbox** para Roblox.
 
 ## Recursos
-- **Fly** — alterna com a tecla F ou pelo botão no painel
+- **Fly** — alterna com a tecla **F** ou pelo botão no painel
 - **Controle de velocidade** — slider de 10 a 200
 - **ESP** — destaca jogadores com nome e distância em metros
+- **Hitbox** — aumenta a hitbox dos inimigos (slider de 5 a 50)
+
+## Controles
+- **F** — ativar/desativar o Fly
+- **W / A / S / D** — movimentação (direção da câmera)
+- **Space / E** — subir
+- **Shift / Q** — descer
+- **Insert** — mostrar/ocultar o painel
 
 ## Uso
 
-1. Copie o conteúdo de SXZ-PAINEL.lua`n2. Cole em um executor de scripts e execute
-3. Use F para voar, Space/E para subir e Shift/Q para descer
+1. Copie o conteúdo de `SXZ_PAINEL.lua`
+2. Cole em um executor de scripts e execute
+3. Use **F** para voar, **Space/E** para subir e **Shift/Q** para descer
